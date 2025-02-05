@@ -2,32 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:warung_keena_app/components/my_button.dart';
 import 'package:warung_keena_app/components/my_textfield.dart';
-import 'package:warung_keena_app/pages/home/dashboard_page.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  // Text editing controllers
+class _RegisterPageState extends State<RegisterPage> {
+  //text editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  // Login method
-  void login() {
-    // Navigasi ke DashboardPage
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const DashboardPage(),
-      ),
-    );
-  }
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Logo
+            //Logo
             SizedBox(
               width: 160,
               height: 150,
@@ -47,50 +36,74 @@ class _LoginPageState extends State<LoginPage> {
                     const CircularProgressIndicator(),
               ),
             ),
-            const SizedBox(height: 10),
 
-            // Slogan
+            const SizedBox(
+              height: 10,
+            ),
+
+            //message, app slogan
             const Text(
-              'Warung Keena POS',
+              "Let's create an account for you",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 25),
 
-            // Email textfield
+            const SizedBox(
+              height: 25,
+            ),
+
+            //email textfield
             MyTextField(
               controller: emailController,
-              hintText: 'Email',
+              hintText: 'email',
               obscureText: false,
             ),
-            const SizedBox(height: 10),
 
-            // Password textfield
+            const SizedBox(
+              height: 10,
+            ),
+
+            //password textfield
             MyTextField(
               controller: passwordController,
-              hintText: 'Password',
+              hintText: 'password',
               obscureText: true,
             ),
 
-            const SizedBox(height: 10),
-
-            // Sign in button
-            MyButton(
-              text: 'Sign In',
-              onTap: login, // Diperbaiki
+            const SizedBox(
+              height: 10,
             ),
 
-            const SizedBox(height: 25),
+            //password textfield
+            MyTextField(
+              controller: confirmPasswordController,
+              hintText: 'confirm password',
+              obscureText: true,
+            ),
 
-            // Not a member? Register now
+            const SizedBox(
+              height: 10,
+            ),
+
+            //sign up button
+            MyButton(
+              text: 'Sign Up',
+              onTap: () {}, // Diperbaiki
+            ),
+
+            const SizedBox(
+              height: 25,
+            ),
+
+            //already have an account? Login here
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Not a member?',
+                  'already have an account?',
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -99,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 GestureDetector(
                   onTap: widget.onTap,
                   child: const Text(
-                    'Register now',
+                    'Login here',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

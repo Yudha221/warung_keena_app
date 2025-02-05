@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:warung_keena_app/pages/auth/login_page.dart';
+import 'package:warung_keena_app/auth/login_or_register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: LoginOrRegister(),
     );
   }
 }

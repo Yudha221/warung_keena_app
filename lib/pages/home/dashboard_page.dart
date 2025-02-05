@@ -75,7 +75,10 @@ class _DashboardPageState extends State<DashboardPage> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(
+                      builder: (context) => LoginPage(
+                            onTap: () {},
+                          )),
                 );
               },
             ),
