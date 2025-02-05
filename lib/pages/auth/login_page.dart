@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
 
               // logo
               SizedBox(
@@ -79,7 +79,7 @@ class LoginPage extends StatelessWidget {
                     signUserIn(context), // Panggil fungsi dengan context
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 60),
               // google + apple sign in buttons
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
