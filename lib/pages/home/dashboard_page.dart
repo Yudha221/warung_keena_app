@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:warung_keena_app/components/my_drawer.dart';
 import 'package:warung_keena_app/pages/auth/login_page.dart';
 import 'package:warung_keena_app/pages/home/add_page.dart';
 
@@ -31,60 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home, size: 24),
-              title: const Text('Home'),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -1),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const DashboardPage()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.food_bank, size: 24),
-              title: const Text('Add Menu'),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -1),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddPage()),
-                );
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout, size: 24, color: Colors.red),
-              title: const Text('Logout', style: TextStyle(color: Colors.red)),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -1),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => LoginPage(
-                            onTap: () {},
-                          )),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       body: Column(
         children: [
           Padding(
