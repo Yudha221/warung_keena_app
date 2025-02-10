@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "7caf6a750a0c04effbb52a676dce9a4a592e10ad35c34d6d2d0e4811160d5670"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.4+2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -78,6 +86,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: "8cf40eebf5dec866a6d1956ad7b4f7016e6c0cc69847ab946833b7d43743809f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.19"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -107,6 +123,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  img_picker:
+    dependency: "direct main"
+    description:
+      name: img_picker
+      sha256: "289796ebc667d1031e944c82709f5c67f06a9698ba4538baf5e002f10e562c7c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  img_picker_android:
+    dependency: transitive
+    description:
+      name: img_picker_android
+      sha256: "930be3e686b164676383d8775f818affa883f88191c42af983b1a781996a3589"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
+  img_picker_ios:
+    dependency: transitive
+    description:
+      name: img_picker_ios
+      sha256: bde838d7a9fcafcdde6183c701a31d6b846b7b761714ed3438b3f25ac406ac55
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  img_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: img_picker_platform_interface
+      sha256: b33367f332f1ad9f7174a4e02b8932376c15a79d5d3aef34cca139832558e2bd
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -187,6 +235,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.8"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -306,4 +362,4 @@ packages:
     version: "6.5.0"
 sdks:
   dart: ">=3.3.4 <4.0.0"
-  flutter: ">=3.7.0-0"
+  flutter: ">=3.16.0"
