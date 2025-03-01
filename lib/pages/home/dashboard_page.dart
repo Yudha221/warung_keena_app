@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warung_keena_app/components/my_drawer.dart';
+import 'package:warung_keena_app/components/product_card.dart';
+import 'package:warung_keena_app/models/product.dart';
 import 'package:warung_keena_app/pages/auth/login_page.dart';
 import 'package:warung_keena_app/pages/home/add_page.dart';
 
@@ -62,19 +64,11 @@ class _DashboardPageState extends State<DashboardPage> {
                 childAspectRatio: 0.8,
               ),
               itemBuilder: (context, index) {
-                return Card(
-                  child: Container(
-                    color: Colors.grey,
-                    child: Center(
-                      child: Text(
-                        'Item ${index + 1}',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
+                return ProductCard(
+                  product: allProduct[index],
                 );
               },
-              itemCount: 13,
+              itemCount: allProduct.length,
             ),
           ),
         ],
