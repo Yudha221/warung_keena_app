@@ -4,6 +4,7 @@ import 'package:warung_keena_app/components/product_card.dart';
 import 'package:warung_keena_app/models/product.dart';
 import 'package:warung_keena_app/pages/auth/login_page.dart';
 import 'package:warung_keena_app/pages/home/add_page.dart';
+import 'package:warung_keena_app/pages/home/detail_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -64,8 +65,18 @@ class _DashboardPageState extends State<DashboardPage> {
                 childAspectRatio: 0.8,
               ),
               itemBuilder: (context, index) {
-                return ProductCard(
-                  product: allProduct[index],
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return DetailPage(
+                        product: allProduct[index],
+                      );
+                    }));
+                  },
+                  child: ProductCard(
+                    product: allProduct[index],
+                  ),
                 );
               },
               itemCount: allProduct.length,
