@@ -41,6 +41,8 @@ class _AddPageState extends State<AddPage> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            const ImageInput(),
+            const SizedBox(height: 16),
             TextFormField(
               controller: titleController,
               decoration: const InputDecoration(
@@ -52,14 +54,14 @@ class _AddPageState extends State<AddPage> {
             TextFormField(
               controller: descriptionController,
               decoration: const InputDecoration(
-                  labelText: 'Deskripsi', border: OutlineInputBorder()),
+                labelText: 'Deskripsi',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 4,
               validator: (value) => value == null || value.isEmpty
                   ? 'Deskripsi wajib diisi'
                   : null,
             ),
-            const SizedBox(height: 16),
-            // Image Input
-            ImageInput(),
             const SizedBox(height: 16),
             TextFormField(
               controller: priceController,

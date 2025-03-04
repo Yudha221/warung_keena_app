@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:warung_keena_app/pages/home/edit_page.dart';
 
 import '../../models/product.dart';
 
@@ -32,7 +33,11 @@ class _DetailPageState extends State<DetailPage> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
               icon: const Icon(Icons.edit, color: Colors.white),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const EditPage();
+                }));
+              },
             ),
           ),
         ],
