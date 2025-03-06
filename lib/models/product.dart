@@ -60,7 +60,7 @@ var allProduct = [
     name: 'Nasi Goreng',
     image: 'assets/makanan/nasi_goreng.jpg',
     description: 'Nasi goreng spesial dengan telor',
-    price: 18000.0,
+    price: 16000.0,
     quantity: 1,
   ),
 ];

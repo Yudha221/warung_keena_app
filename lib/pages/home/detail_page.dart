@@ -32,12 +32,8 @@ class _DetailPageState extends State<DetailPage> {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              icon: const Icon(Icons.edit, color: Colors.white),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const EditPage();
-                }));
-              },
+              icon: const Icon(Icons.delete, color: Colors.white),
+              onPressed: () {},
             ),
           ),
         ],
@@ -70,6 +66,40 @@ class _DetailPageState extends State<DetailPage> {
               textAlign: TextAlign.center,
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const EditPage();
+          }));
+        },
+        child: const Icon(Icons.edit),
+      ),
+      bottomSheet: BottomAppBar(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          alignment: Alignment.center,
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height / 10,
+          decoration: const BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: Row(
+            children: [
+              Text(
+                'Rp. ${widget.product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+$)'), (match) => '${match[1]}.')}',
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );
