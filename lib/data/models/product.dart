@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 class Product {
-  final int id;
+  final int? id;
   final String name;
   final String image;
   final String description;
@@ -10,7 +10,7 @@ class Product {
   int quantity;
 
   Product({
-    required this.id,
+    this.id,
     required this.name,
     required this.image,
     required this.description,
@@ -31,12 +31,12 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: map['id'] as int,
+      id: map['id'] as int?,
       name: map['name'] as String,
       image: map['image'] as String,
       description: map['description'] as String,
-      price: map['price'] as double,
-      quantity: map['quantity'] as int,
+      price: (map['price'] as num?)?.toDouble() ?? 0.0, // Handle int atau null
+      quantity: map['quantity'] ?? 0, // Jika null, set 0
     );
   }
 
@@ -48,7 +48,6 @@ class Product {
 
 var allProduct = [
   Product(
-    id: 1,
     name: 'Mie Ayam',
     image: 'assets/makanan/mie_ayam.jpg',
     description: 'Mie ayam yang terbuat dari mie dan ada ayamnya',
@@ -56,7 +55,6 @@ var allProduct = [
     quantity: 1,
   ),
   Product(
-    id: 2,
     name: 'Nasi Goreng',
     image: 'assets/makanan/nasi_goreng.jpg',
     description: 'Nasi goreng spesial dengan telor',

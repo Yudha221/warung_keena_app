@@ -9,6 +9,14 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+  String? _imagePath;
+
+  void _setImage(String imagePath) {
+    setState(() {
+      _imagePath = imagePath; // Simpan path gambar yang dipilih
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +36,7 @@ class _EditPageState extends State<EditPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const ImageInput(),
+          ImageInput(onImageSelected: _setImage),
           const SizedBox(height: 16),
           TextFormField(
             decoration: const InputDecoration(

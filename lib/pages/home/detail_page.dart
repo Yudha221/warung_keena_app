@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:warung_keena_app/pages/home/dashboard_page.dart';
 import 'package:warung_keena_app/pages/home/edit_page.dart';
 
-import '../../models/product.dart';
+import '../../data/datasources/local_datasources.dart';
+import '../../data/models/product.dart';
 
 class DetailPage extends StatefulWidget {
   final Product product; // Tambahkan parameter product
@@ -33,7 +35,33 @@ class _DetailPageState extends State<DetailPage> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
               icon: const Icon(Icons.delete, color: Colors.white),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('delete product'),
+                        content: const Text('Are you sure'),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cencel')),
+                          TextButton(
+                              onPressed: () async {
+                                await LocalDatasource()
+                                    .deleteProductById(widget.product.id!);
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const DashboardPage();
+                                }));
+                              },
+                              child: const Text('Delete')),
+                        ],
+                      );
+                    });
+              },
             ),
           ),
         ],

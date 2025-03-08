@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:warung_keena_app/components/image_input.dart';
-import 'package:warung_keena_app/models/product.dart';
+import 'package:warung_keena_app/data/models/product.dart';
+import '../../data/datasources/local_datasources.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -14,8 +16,15 @@ class _AddPageState extends State<AddPage> {
   final titleController = TextEditingController();
   final priceController = TextEditingController();
   final descriptionController = TextEditingController();
-  final imageController = TextEditingController();
   final quantityController = TextEditingController();
+
+  String? _imagePath; // Path gambar
+
+  void _setImage(String imagePath) {
+    setState(() {
+      _imagePath = imagePath;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +32,19 @@ class _AddPageState extends State<AddPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         elevation: 2,
-        flexibleSpace: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: 50),
-            child: Text(
-              'Add Menu',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
+        title: const Text(
+          'Add Menu',
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
       body: Form(
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            const ImageInput(),
+            ImageInput(onImageSelected: _setImage),
             const SizedBox(height: 16),
             TextFormField(
               controller: titleController,
@@ -54,9 +57,7 @@ class _AddPageState extends State<AddPage> {
             TextFormField(
               controller: descriptionController,
               decoration: const InputDecoration(
-                labelText: 'Deskripsi',
-                border: OutlineInputBorder(),
-              ),
+                  labelText: 'Deskripsi', border: OutlineInputBorder()),
               maxLines: 4,
               validator: (value) => value == null || value.isEmpty
                   ? 'Deskripsi wajib diisi'
@@ -68,8 +69,12 @@ class _AddPageState extends State<AddPage> {
               decoration: const InputDecoration(
                   labelText: 'Harga', border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
-              validator: (value) =>
-                  value == null || value.isEmpty ? 'Harga wajib diisi' : null,
+              validator: (value) {
+                if (value == null || value.isEmpty) return 'Harga wajib diisi';
+                if (double.tryParse(value) == null)
+                  return 'Harga harus berupa angka';
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -77,27 +82,40 @@ class _AddPageState extends State<AddPage> {
               decoration: const InputDecoration(
                   labelText: 'Kuantitas', border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
-              validator: (value) => value == null || value.isEmpty
-                  ? 'Kuantitas wajib diisi'
-                  : null,
+              validator: (value) {
+                if (value == null || value.isEmpty)
+                  return 'Kuantitas wajib diisi';
+                if (int.tryParse(value) == null)
+                  return 'Kuantitas harus berupa angka bulat';
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  double price = double.tryParse(priceController.text) ?? 0.0;
-                  int quantity = int.tryParse(quantityController.text) ?? 1;
+                  if (_imagePath == null || _imagePath!.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Gambar wajib diisi")),
+                    );
+                    return;
+                  }
+
+                  double price = double.parse(priceController.text);
+                  int quantity = int.parse(quantityController.text);
 
                   Product newProduct = Product(
-                    id: DateTime.now().millisecondsSinceEpoch, // ID unik
                     name: titleController.text,
-                    image: imageController.text,
+                    image: _imagePath!,
                     description: descriptionController.text,
                     price: price,
                     quantity: quantity,
                   );
 
-                  print("Produk Ditambahkan: ${newProduct.toJson()}");
+                  final db = LocalDatasource();
+                  await db.insertProduct(newProduct);
+
+                  print("✅ Produk Ditambahkan: ${newProduct.toJson()}");
 
                   Navigator.pop(context);
                 }

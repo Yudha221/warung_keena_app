@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget {
-  const ImageInput({super.key});
+  final Function(String) onImageSelected; // Tambahkan parameter callback
+
+  const ImageInput({super.key, required this.onImageSelected});
 
   @override
   State<ImageInput> createState() {
@@ -27,6 +29,8 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       _selectedImage = File(pickedImage.path);
     });
+
+    widget.onImageSelected(pickedImage.path); // Kirim path ke `AddPage`
   }
 
   @override

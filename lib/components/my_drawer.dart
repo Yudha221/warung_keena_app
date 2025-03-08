@@ -5,7 +5,9 @@ import 'package:warung_keena_app/pages/auth/login_page.dart';
 import 'package:warung_keena_app/pages/home/add_page.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+  final VoidCallback onRefresh;
+
+  const MyDrawer({super.key, required this.onRefresh});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class MyDrawer extends StatelessWidget {
       backgroundColor: Colors.blue,
       child: Column(
         children: [
-          //app logo
+          // Logo
           Padding(
             padding: const EdgeInsets.only(top: 100.0),
             child: SizedBox(
@@ -34,30 +36,31 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
 
-          //home list tile
+          // Home
           MyDrawerTile(
             text: 'Home',
             icon: Icons.home,
-            textColor: Colors.white, // Warna teks putih
-            iconColor: Colors.white, // Warna ikon putih
+            textColor: Colors.white,
+            iconColor: Colors.white,
             onTap: () => Navigator.pop(context),
           ),
 
-          // add menu tile
+          // Add Menu
           MyDrawerTile(
-              text: 'ADD MENU',
-              icon: Icons.food_bank,
-              textColor: Colors.white, // Warna teks putih
-              iconColor: Colors.white, // Warna ikon putih
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddPage(),
-                  ),
-                );
-              }),
+            text: 'ADD MENU',
+            icon: Icons.food_bank,
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddPage()),
+              ).then((_) {
+                onRefresh(); // Panggil refresh produk setelah kembali dari AddPage
+              });
+            },
+          ),
 
           const Spacer(),
 
@@ -68,12 +71,12 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
 
-          // log out tile
+          // Log Out
           MyDrawerTile(
             text: 'Log Out',
             icon: Icons.logout,
-            textColor: Colors.red, // Warna teks merah
-            iconColor: Colors.red, // Warna ikon merah
+            textColor: Colors.red,
+            iconColor: Colors.red,
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).pushReplacement(
@@ -84,9 +87,7 @@ class MyDrawer extends StatelessWidget {
             },
           ),
 
-          const SizedBox(
-            height: 25,
-          )
+          const SizedBox(height: 25),
         ],
       ),
     );
