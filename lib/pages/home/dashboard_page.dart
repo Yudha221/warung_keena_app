@@ -87,7 +87,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ? const Center(child: Text('Produk tidak tersedia'))
                     : GridView.builder(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
+                            horizontal: 16, vertical: 10),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,

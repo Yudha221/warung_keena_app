@@ -5,8 +5,10 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget {
   final Function(String) onImageSelected; // Tambahkan parameter callback
+  final String? initialImage;
 
-  const ImageInput({super.key, required this.onImageSelected});
+  const ImageInput(
+      {super.key, required this.onImageSelected, this.initialImage});
 
   @override
   State<ImageInput> createState() {
@@ -16,6 +18,14 @@ class ImageInput extends StatefulWidget {
 
 class _ImageInputState extends State<ImageInput> {
   File? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialImage != null) {
+      _selectedImage = File(widget.initialImage!);
+    }
+  }
 
   void _takepicture() async {
     final imagePicker = ImagePicker();

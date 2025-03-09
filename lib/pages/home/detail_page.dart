@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:warung_keena_app/pages/home/dashboard_page.dart';
 import 'package:warung_keena_app/pages/home/edit_page.dart';
@@ -17,6 +18,9 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
+    bool isLocalFile = widget.product.image.startsWith('/data/user') ||
+        widget.product.image.startsWith('/storage/');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,14 +44,14 @@ class _DetailPageState extends State<DetailPage> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('delete product'),
-                        content: const Text('Are you sure'),
+                        title: const Text('Delete product'),
+                        content: const Text('Are you sure?'),
                         actions: [
                           TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text('Cencel')),
+                              child: const Text('Cancel')),
                           TextButton(
                               onPressed: () async {
                                 await LocalDatasource()
@@ -72,12 +76,19 @@ class _DetailPageState extends State<DetailPage> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset(
-                widget.product.image, // Gunakan widget.product.image
-                width: double.infinity,
-                height: 250,
-                fit: BoxFit.cover,
-              ),
+              child: isLocalFile
+                  ? Image.file(
+                      File(widget.product.image),
+                      width: double.infinity,
+                      height: 250,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      widget.product.image,
+                      width: double.infinity,
+                      height: 250,
+                      fit: BoxFit.cover,
+                    ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -99,7 +110,7 @@ class _DetailPageState extends State<DetailPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const EditPage();
+            return EditPage(product: widget.product);
           }));
         },
         child: const Icon(Icons.edit),
@@ -118,6 +129,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Rp. ${widget.product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+$)'), (match) => '${match[1]}.')}',
@@ -126,6 +138,10 @@ class _DetailPageState extends State<DetailPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
+              ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.send),
+                  label: const Text('Add To Cart'))
             ],
           ),
         ),
