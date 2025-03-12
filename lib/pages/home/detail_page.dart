@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:warung_keena_app/pages/cart/cart_page.dart';
 import 'package:warung_keena_app/pages/home/dashboard_page.dart';
 import 'package:warung_keena_app/pages/home/edit_page.dart';
+import 'package:warung_keena_app/providers/cart_provider.dart';
 
 import '../../data/datasources/local_datasources.dart';
 import '../../data/models/product.dart';
@@ -18,6 +21,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<CartProvider>(context, listen: false);
     bool isLocalFile = widget.product.image.startsWith('/data/user') ||
         widget.product.image.startsWith('/storage/');
 
@@ -139,7 +143,19 @@ class _DetailPageState extends State<DetailPage> {
                     color: Colors.white),
               ),
               ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    final provider =
+                        Provider.of<CartProvider>(context, listen: false);
+                    provider.toggleProduct(
+                        widget.product); // Panggil dengan widget.product
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CartPage(),
+                      ),
+                    );
+                  },
                   icon: const Icon(Icons.send),
                   label: const Text('Add To Cart'))
             ],

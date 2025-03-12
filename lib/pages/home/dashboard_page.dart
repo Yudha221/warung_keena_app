@@ -5,7 +5,9 @@ import 'package:warung_keena_app/components/my_drawer.dart';
 import 'package:warung_keena_app/components/product_card.dart';
 import 'package:warung_keena_app/data/datasources/local_datasources.dart';
 import 'package:warung_keena_app/data/models/product.dart';
+import 'package:warung_keena_app/pages/cart/cart_page.dart';
 import 'package:warung_keena_app/pages/home/detail_page.dart';
+import 'package:provider/provider.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -45,18 +47,35 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         elevation: 2,
+        iconTheme: IconThemeData(color: Colors.white),
         flexibleSpace: const Center(
           child: Padding(
             padding: EdgeInsets.only(top: 50),
             child: Text(
               'Dashboard',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CartPage(),
+              ),
+            ),
+            icon: const Icon(Icons.shopping_cart),
+            padding: const EdgeInsets.only(
+              right: 10,
+            ),
+            color: Colors.white,
+          ),
+        ],
       ),
       drawer: MyDrawer(
           onRefresh: getProducts), // Pastikan `MyDrawer` sudah didefinisikan
@@ -87,7 +106,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ? const Center(child: Text('Produk tidak tersedia'))
                     : GridView.builder(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 10),
+                            horizontal: 20, vertical: 10),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
