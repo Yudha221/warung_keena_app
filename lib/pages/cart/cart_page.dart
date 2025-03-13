@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:warung_keena_app/providers/cart_provider.dart';
+import '../payment/payment_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -26,8 +27,7 @@ class _CartPageState extends State<CartPage> {
     }
 
     final finalList = provider.cart;
-    final total =
-        provider.totalPrice(); // Total dengan diskon atau pajak jika ada
+    final total = provider.totalPrice(); // Total harga produk
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +69,7 @@ class _CartPageState extends State<CartPage> {
                         icon:
                             const Icon(Icons.remove_circle, color: Colors.red),
                         onPressed: () {
-                          provider.decreaseQuantity(product); // Kurangi jumlah
+                          provider.decreaseQuantity(product);
                         },
                       ),
                       Text(
@@ -79,7 +79,7 @@ class _CartPageState extends State<CartPage> {
                       IconButton(
                         icon: const Icon(Icons.add_circle, color: Colors.green),
                         onPressed: () {
-                          provider.increaseQuantity(product); // Tambah jumlah
+                          provider.increaseQuantity(product);
                         },
                       ),
                     ],
@@ -101,10 +101,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     const Text(
                       'Subtotal:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                     Text(
                       'Rp. ${formatPrice(total)}',
@@ -116,7 +113,7 @@ class _CartPageState extends State<CartPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8), // Spasi antara Subtotal dan Total
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -138,18 +135,23 @@ class _CartPageState extends State<CartPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20), // Spasi sebelum tombol Payment
+                const SizedBox(height: 20),
                 SizedBox(
-                  width: double.infinity, // Tombol melebar penuh
-                  height: 50, // Tinggi tombol
+                  width: double.infinity,
+                  height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentPage(total: total),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.white, // Warna latar belakang tombol
+                      backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            8), // Membuat tombol lebih rounded
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: const Text(
@@ -157,7 +159,7 @@ class _CartPageState extends State<CartPage> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue, // Warna teks tombol
+                        color: Colors.blue,
                       ),
                     ),
                   ),

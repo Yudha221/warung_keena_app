@@ -149,10 +149,10 @@ class _DetailPageState extends State<DetailPage> {
                     provider.toggleProduct(
                         widget.product); // Panggil dengan widget.product
 
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CartPage(),
+                        builder: (context) => const DashboardPage(),
                       ),
                     );
                   },
