@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:warung_keena_app/components/my_drawer_tile.dart';
 import 'package:warung_keena_app/pages/auth/login_page.dart';
 import 'package:warung_keena_app/pages/home/add_page.dart';
+import 'package:warung_keena_app/pages/report%20sale/report_page.dart';
 
 class MyDrawer extends StatelessWidget {
   final VoidCallback onRefresh;
@@ -60,6 +61,31 @@ class MyDrawer extends StatelessWidget {
                 onRefresh(); // Panggil refresh produk setelah kembali dari AddPage
               });
             },
+          ),
+
+          // Report sale
+          MyDrawerTile(
+            text: 'REPORT SALE',
+            icon: Icons.point_of_sale,
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ReportPage()),
+              ).then((_) {
+                onRefresh(); // Panggil refresh produk setelah kembali dari AddPage
+              });
+            },
+          ),
+
+          MyDrawerTile(
+            text: 'PRINTER',
+            icon: Icons.print,
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            onTap: () {},
           ),
 
           const Spacer(),

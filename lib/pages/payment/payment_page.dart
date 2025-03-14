@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:warung_keena_app/data/models/nota.dart';
+import 'package:warung_keena_app/data/models/order_report.dart';
 import 'package:warung_keena_app/pages/payment/nota_page.dart';
-
-import '../../data/models/nota.dart';
+import 'package:warung_keena_app/providers/order_report_provider.dart';
 
 class PaymentPage extends StatefulWidget {
   final double total;
@@ -177,26 +180,58 @@ class _PaymentPageState extends State<PaymentPage> {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  final orderReportProvider =
+                      Provider.of<OrderReportProvider>(context, listen: false);
+
                   double? cashAmount;
                   double? change;
 
                   if (_selectedPaymentMethod == 'Cash') {
                     cashAmount = double.tryParse(_amountController.text) ?? 0;
                     change = cashAmount - widget.total;
+
+                    if (cashAmount < widget.total) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text("Uang kurang!"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
                   }
 
-                  final nota = Nota(
-                    total: widget.total,
+                  // Format waktu transaksi
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+                  // Simpan ke dalam laporan (OrderReportProvider)
+                  final orderReport = OrderReport(
+                    orderId: DateTime.now().millisecondsSinceEpoch.toString(),
+                    // ✅ Gunakan int langsung
+                    date: DateTime.now()
+                        .toIso8601String(), // ✅ Ubah DateTime ke String
+                    totalAmount: widget.total,
                     paymentMethod: _selectedPaymentMethod,
                     cash: cashAmount,
                     change: change,
                   );
 
+                  await orderReportProvider.addOrderReport(orderReport);
+
+                  // Navigasi ke halaman Nota
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NotaPage(nota: nota),
+                      builder: (context) => NotaPage(
+                        nota: Nota(
+                          total: widget.total,
+                          paymentMethod: _selectedPaymentMethod,
+                          cash: cashAmount,
+                          change: change,
+                        ),
+                      ),
                     ),
                   );
                 },

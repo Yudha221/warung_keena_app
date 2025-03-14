@@ -30,14 +30,16 @@ class _ProductCardState extends State<ProductCard> {
             width: 140,
             child: isLocalFile
                 ? Image.file(File(widget.product.image),
-                    fit: BoxFit.cover) // 📸 Gambar dari kamera/gallery
+                    fit: BoxFit.cover) //  Gambar dari kamera/gallery
                 : Image.asset(widget.product.image,
-                    fit: BoxFit.cover), // 🖼 Gambar dari assets
+                    fit: BoxFit.cover), //  Gambar dari assets
           ),
+          const SizedBox(height: 8),
           Text(
             widget.product.name,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 4),
           Text(
             'Rp. ${widget.product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+$)'), (match) => '${match[1]}.')}',
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),

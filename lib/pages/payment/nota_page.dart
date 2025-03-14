@@ -34,10 +34,7 @@ class NotaPage extends StatelessWidget {
           children: [
             const Text(
               "Total Pembayaran",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             Text(
@@ -72,6 +69,7 @@ class NotaPage extends StatelessWidget {
             ],
             if (nota.paymentMethod == "QRIS") ...[
               const SizedBox(height: 16),
+              const Text("Pembayaran berhasil melalui QRIS"),
               Image.asset('assets/images/qiris_example.png',
                   width: 180, height: 180),
             ],

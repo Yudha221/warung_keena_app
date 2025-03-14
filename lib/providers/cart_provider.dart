@@ -29,6 +29,11 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
+
   double totalPrice() {
     return _cart.fold(0, (sum, item) => sum + (item.price * item.quantity));
   }

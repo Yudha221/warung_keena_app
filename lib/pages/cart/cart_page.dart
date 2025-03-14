@@ -141,6 +141,7 @@ class _CartPageState extends State<CartPage> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
+                      provider.clearCart(); // Hapus semua item dari keranjang
                       Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -100,8 +100,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           Expanded(
             child: isLoading
-                ? const Center(
-                    child: CircularProgressIndicator()) // Menampilkan loading
+                ? const Center(child: CircularProgressIndicator())
                 : products.isEmpty
                     ? const Center(child: Text('Produk tidak tersedia'))
                     : GridView.builder(
@@ -110,23 +109,34 @@ class _DashboardPageState extends State<DashboardPage> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 14,
                           childAspectRatio: 0.8,
                         ),
-                        itemCount: products.length,
+                        itemCount: products
+                            .where((product) => product.name
+                                .toLowerCase()
+                                .contains(searchQuery))
+                            .length,
                         itemBuilder: (context, index) {
+                          var filteredProducts = products
+                              .where((product) => product.name
+                                  .toLowerCase()
+                                  .contains(searchQuery))
+                              .toList();
+
                           return InkWell(
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return DetailPage(
-                                    product:
-                                        products[index]); // Perbaikan di sini
-                              }));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return DetailPage(
+                                      product: filteredProducts[index]);
+                                }),
+                              );
                             },
                             child: ProductCard(
-                              product: products[index], // Perbaikan di sini
+                              product: filteredProducts[index],
                             ),
                           );
                         },
